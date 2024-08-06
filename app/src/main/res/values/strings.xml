@@ -2,9 +2,16 @@
     <string name="app_name">Alarm</string>
     <string name="notification_text">Alarm</string>
     <string name="dismiss_button">Dismiss</string>
-    <string name="csv_header">Timestamp(ms),Alarm ID,Timestamp,Action</string>
+    <string name="csv_header">Participant ID,Condition,Timestamp(ms),Alarm ID,Timestamp,Action</string>
     <string name="log_tag">HeadTracking</string>
     <string name="log_shown">shown</string>
     <string name="log_dismissed">dismissed</string>
     <string name="log_auto_dismissed">auto-dismissed</string>
+    <string-array name="conditions_array">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
 </resources>

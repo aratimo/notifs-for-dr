@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private LinearLayout notificationContainer;
     private RelativeLayout mainActivityLayout;
     private int currentAlarmId = 0; // Keeps track of the current alarm ID
+    private String participantId;
+    private String condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         timeTextView = findViewById(R.id.timeTextView);
 
         originalBackgroundColor = getThemeBackgroundColor();
+        participantId = getIntent().getStringExtra("participant_id");
+        condition = getIntent().getStringExtra("condition");
 
         enterFullScreenMode();
         initializeCSV();
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logToCSV(int alarmId, long timestampMs, String timestampFormatted, String action) {
         try (FileWriter writer = new FileWriter(csvFilePath, true)) {
-            writer.append(timestampMs + "," + alarmId + "," + timestampFormatted + "," + action + "\n");
+            writer.append(participantId + "," + condition + "," + timestampMs + "," + alarmId + "," + timestampFormatted + "," + action + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 if (!dismissedNotifications.contains(alarmId)) {
                     notificationView.setVisibility(View.GONE);
+                    resetBackground();
                     // Log the auto-dismissal time if not already dismissed
                     long timestampMs = System.currentTimeMillis();
                     String timestampFormatted = getCurrentTimestamp();
@@ -184,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
                     // Remove notification view and update container visibility
                     notificationContainer.removeView(notificationView);
                     updateNotificationContainerVisibility();
-                    resetBackground();
                     timeTextView.setVisibility(View.GONE);
                 }
             }
